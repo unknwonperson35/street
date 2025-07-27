@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | StreetBasket</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>StreetBasket Login</h1>
+  </header>
+
+  <form action="/login" method="POST">
+    <!-- Flash message (optional) -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-msg">{{ messages[0] }}</div>
+      {% endif %}
+    {% endwith %}
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required>
+    <button type="button" class="toggle-password" data-target="password">Show</button>
+
+    <label for="role">Login as:</label>
+    <select name="role" required>
+      <option value="">Select Role</option>
+      <option value="vendor">Vendor</option>
+      <option value="supplier">Supplier</option>
+    </select>
+
+    <button type="submit" class="btn">Login</button>
+  </form>
+
+  <footer style="text-align:center; margin-top:50px;">
+    <p>Don't have an account? <a href="/vendor/register">Register as Vendor</a> | <a href="/supplier/register">Register as Supplier</a></p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

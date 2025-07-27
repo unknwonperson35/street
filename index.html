@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>StreetBasket | Your Online Market</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Optional custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <!-- Top Header -->
+  <div class="bg-gray-100 py-2 text-center text-sm text-gray-700">
+    <span>Call Us: (008) 123 456 789</span> |
+    <span>Email: mekog@support.com</span>
+    <div class="mt-1">
+      <a href="#" class="text-blue-600 hover:underline">Currency</a> |
+      <a href="#" class="text-blue-600 hover:underline">Language</a> |
+      <a href="/login" class="text-blue-600 hover:underline">Sign in / Register</a>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="StreetBasket Logo" class="h-10 mr-2" />
+        <h1 class="text-2xl font-bold text-green-700">StreetBasket</h1>
+      </div>
+      <nav>
+        <a href="/" class="text-gray-700 hover:text-green-600 px-4">Home</a>
+        <a href="/vendor-login" class="text-gray-700 hover:text-green-600 px-4">Vendor Login</a>
+        <a href="/supplier-login" class="text-gray-700 hover:text-green-600 px-4">Supplier Login</a>
+        <a href="/cart" class="text-gray-700 hover:text-green-600 px-4 relative">
+          Cart
+          <span class="absolute -top-1 -right-2 bg-red-600 rounded-full text-xs w-5 h-5 flex justify-center items-center text-white">3</span> <!-- Example cart count -->
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="bg-green-100 py-16 text-center relative overflow-hidden">
+    <h2 class="text-5xl font-extrabold text-green-800 mb-4 leading-tight">
+      Street Vendor to Trusted Supplier <br />
+      
+    </h2>
+    <p class="text-lg text-gray-700 mb-8 max-w-xl mx-auto">
+      Affordable. Trusted. Accessible.
+    </p>
+    <a href="#products" class="bg-green-700 text-white px-8 py-4 rounded-full shadow-lg text-lg hover:bg-green-800 transition duration-300 inline-block">
+      Shop Now
+    </a>
+    <!-- Decorative shapes -->
+    <div class="absolute top-8 right-8 opacity-20">
+      <img src="{{ url_for('static', filename='images/hero-decor.svg') }}" alt="" class="w-32 h-32" />
+    </div>
+  </section>
+
+  <!-- Search Bar -->
+  <section class="bg-white py-8 shadow-md">
+    <div class="max-w-4xl mx-auto px-4">
+      <form action="/search" class="flex shadow-sm rounded overflow-hidden w-full max-w-3xl mx-auto">
+        <input
+          type="text"
+          name="query"
+          placeholder="Search for products..."
+          class="w-full p-4 border-none focus:ring-2 focus:ring-green-600 focus:outline-none rounded-l"
+          required
+        />
+        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 font-semibold rounded-r transition">
+          Search
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Featured Products Carousel -->
+  <section class="mt-16 max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-6 text-gray-800">Featured Products</h2>
+    <div class="flex space-x-6 overflow-x-auto scrollbar-hide py-4">
+      <!-- You can replace with a carousel plugin or your own implementation -->
+      {% for product in featured_products %}
+      <div class="min-w-[220px] bg-white rounded-lg shadow-md p-4 flex-shrink-0 hover:shadow-xl transition duration-300">
+        <img
+          src="{{ url_for('static', filename='uploads/' ~ product.image_filename) }}"
+          alt="{{ product.name }}"
+          class="h-40 w-full object-cover rounded-md mb-4"
+        />
+        <h3 class="font-semibold text-lg text-gray-800">{{ product.name }}</h3>
+        <p class="mt-1 text-green-600 font-bold">₹{{ product.price }} / kg</p>
+        <button
+          class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded transition"
+          onclick="alert('Added {{ product.name }} to cart!')"
+        >
+          Add to Cart
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="mt-20 bg-white py-12">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Shop by Category</h2>
+    <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 px-4">
+      <div class="text-center cursor-pointer hover:shadow-lg p-6 rounded-lg transition bg-green-50">
+        <img src="{{ url_for('static', filename='Veg.png') }}" alt="Veg" class="mx-auto h-20 mb-2" />
+        <h3 class="font-semibold text-lg text-green-700">Veg</h3>
+      </div>
+      <div class="text-center cursor-pointer hover:shadow-lg p-6 rounded-lg transition bg-green-50">
+        <img src="{{ url_for('static', filename='Nonveg.png') }}" alt="Nonveg" class="mx-auto h-20 mb-2" />
+        <h3 class="font-semibold text-lg text-green-700">Nonveg</h3>
+      </div>
+      <div class="text-center cursor-pointer hover:shadow-lg p-6 rounded-lg transition bg-green-50">
+        <img src="{{ url_for('static', filename='dairy.jpg') }}" alt="Dairy" class="mx-auto h-20 mb-2" />
+        <h3 class="font-semibold text-lg text-green-700">Dairy</h3>
+      </div>
+      <div class="text-center cursor-pointer hover:shadow-lg p-6 rounded-lg transition bg-green-50">
+        <img src="{{ url_for('static', filename='masale.png') }}" alt="Masale" class="mx-auto h-20 mb-2" />
+        <h3 class="font-semibold text-lg text-green-700">Masale</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Listing -->
+  <section id="products" class="mt-20 px-4 max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8 text-gray-800">Available Products</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      {% for product in products %}
+      <div class="bg-white p-4 shadow rounded-lg hover:shadow-xl transition relative flex flex-col">
+        <img
+          src="{{ url_for('static', filename='uploads/' ~ product.image_filename) }}"
+          alt="{{ product.name }}"
+          class="w-full h-40 object-cover rounded-md mb-4"
+        />
+        <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
+        <p class="text-green-600 font-bold mb-4">₹{{ product.price }} / kg</p>
+        <button
+          class="mt-auto bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition"
+          onclick="alert('Added {{ product.name }} to cart!')"
+        >
+          Add to Cart
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Testimonials / Customer Reviews -->
+  <section class="mt-20 bg-green-50 py-16">
+    <h2 class="text-3xl font-bold text-center text-green-700 mb-12">What Our Customers Say</h2>
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 px-4">
+      <div class="bg-white p-6 shadow rounded-lg text-center">
+        <p class="text-gray-700 italic mb-6">"StreetBasket has transformed my daily shopping experience – fresh products at great prices!"</p>
+        <h4 class="font-semibold text-green-700">Rajesh Kumar</h4>
+      </div>
+      <div class="bg-white p-6 shadow rounded-lg text-center">
+        <p class="text-gray-700 italic mb-6">"Easy to order and my supplies always arrive on time. Highly recommended!"</p>
+        <h4 class="font-semibold text-green-700">Nisha Patel</h4>
+      </div>
+      <div class="bg-white p-6 shadow rounded-lg text-center">
+        <p class="text-gray-700 italic mb-6">"Trusted suppliers and affordable pricing – perfect for small vendors like me."</p>
+        <h4 class="font-semibold text-green-700">Suresh Singh</h4>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 mt-20">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-white font-bold mb-4">StreetBasket</h3>
+        <p>Your go-to marketplace for fresh raw materials, connecting vendors & suppliers directly.</p>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4">Shop</h4>
+        <ul>
+          <li><a href="/" class="hover:underline">Home</a></li>
+          <li><a href="#products" class="hover:underline">Products</a></li>
+          <li><a href="#categories" class="hover:underline">Categories</a></li>
+          <li><a href="/cart" class="hover:underline">Cart</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4">Support</h4>
+        <ul>
+          <li><a href="/contact" class="hover:underline">Contact Us</a></li>
+          <li><a href="/faq" class="hover:underline">FAQs</a></li>
+          <li><a href="/terms" class="hover:underline">Terms & Conditions</a></li>
+          <li><a href="/privacy" class="hover:underline">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4">Follow Us</h4>
+        <div class="flex space-x-4">
+          <a href="#" aria-label="Facebook" class="hover:text-white">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12.07c0-5.49-4.46-9.95-9.95-9.95S2.1 6.58 2.1 12.07c0 4.93 3.55 9.01 8.16 9.87v-6.98H7.9v-2.9h2.36V9.8c0-2.34 1.4-3.63 3.55-3.63 1.03 0 2.1.18 2.1.18v2.3H14.9c-1.16 0-1.52.72-1.52 1.46v1.75h2.6l-.42 2.9h-2.18v6.98c4.62-.86 8.17-4.94 8.17-9.87z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter" class="hover:text-white">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14.86 4.48 4.48 0 001.98-2.48 9.06 9.06 0 01-2.86 1.1 4.52 4.52 0 00-7.7 4.12A12.94 12.94 0 013 4.37a4.52 4.52 0 001.4 6.04 4.43 4.43 0 01-2.05-.57v.06a4.54 4.54 0 003.63 4.44 4.48 4.48 0 01-2.04.07 4.53 4.53 0 004.22 3.13A9.06 9.06 0 012 19.54 12.8 12.8 0 008.29 21c7.55 0 11.68-6.26 11.68-11.57 0-.18 0-.35-.02-.53A8.18 8.18 0 0023 3z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="hover:text-white">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M7.75 2h8.5C19.65 2 22 4.35 22 7.75v8.5c0 3.4-2.35 5.75-5.75 5.75h-8.5C4.35 22 2 19.65 2 16.25v-8.5C2 4.35 4.35 2 7.75 2zm0 2A3.75 3.75 0 004 7.75v8.5A3.75 3.75 0 007.75 20h8.5a3.75 3.75 0 003.75-3.75v-8.5A3.75 3.75 0 0016.25 4h-8.5zm8.75 2a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center py-6 text-gray-500 text-sm">
+      © 2025 StreetBasket. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Optional: Add your own scripts here -->
+  <script>
+    // You can add JavaScript enhancements here if needed. For example, cart button functionality.
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload New Product</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-green-700 text-center">Upload New Product</h2>
+
+    <form action="/product-upload" method="POST" enctype="multipart/form-data" class="space-y-4">
+      <!-- Product Name -->
+      <input
+        type="text"
+        name="product_name"
+        placeholder="Product Name"
+        class="w-full p-3 border rounded"
+        required
+      />
+
+      <!-- Price -->
+      <input
+        type="number"
+        name="price"
+        placeholder="Price (₹ per kg)"
+        class="w-full p-3 border rounded"
+        min="0"
+        step="0.01"
+        required
+      />
+
+      <!-- Stock -->
+      <input
+        type="number"
+        name="stock"
+        placeholder="Stock Quantity (kg)"
+        class="w-full p-3 border rounded"
+        min="0"
+        step="1"
+        required
+      />
+
+      <!-- Image Upload -->
+      <input
+        type="file"
+        name="image"
+        accept="image/*"
+        class="w-full"
+        required
+      />
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full bg-green-700 text-white p-3 rounded hover:bg-green-800"
+      >
+        Upload Product
+      </button>
+    </form>
+  </div>
+
+</body>
+</html>

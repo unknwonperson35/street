@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vendor Registration | StreetBasket</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-green-50 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center text-green-700">Vendor Registration</h2>
+
+    <!-- Flash Message -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="bg-red-100 text-red-700 p-2 rounded text-center mb-4">
+          {{ messages[0] }}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Registration Form -->
+    <form action="{{ url_for('vendor_register') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+
+      <input type="text" name="username" placeholder="Vendor Name" class="w-full p-3 border rounded" required>
+
+      <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded" required>
+
+      <input type="tel" name="phone" placeholder="Phone" class="w-full p-3 border rounded" required>
+
+      <div class="relative">
+        <input type="password" name="password" id="password" placeholder="Password" class="w-full p-3 border rounded" required>
+        <button type="button" onclick="togglePassword()" class="absolute right-3 top-3 text-sm text-gray-500 focus:outline-none">Show</button>
+      </div>
+
+      <input type="text" name="location" placeholder="Location" class="w-full p-3 border rounded" required>
+
+      <input type="file" name="doc" accept=".pdf,.jpg,.jpeg,.png" class="w-full p-2 border rounded" required>
+
+      <button type="submit" class="w-full bg-green-700 text-white p-3 rounded hover:bg-green-800">Register</button>
+    </form>
+
+    <p class="text-center mt-4 text-sm">Already have an account?
+      <a href="{{ url_for('vendor_login') }}" class="text-green-600 hover:underline">Login</a>
+    </p>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const pass = document.getElementById('password');
+      pass.type = pass.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+</html>

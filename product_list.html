@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Available Products | StreetBasket</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Available Products</h1>
+  </header>
+
+  <main style="padding: 20px;">
+    {% if products %}
+      <div class="product-grid">
+        {% for product in products %}
+          <div class="product-card">
+            <h3>{{ product.name }}</h3>
+            <p><strong>Price:</strong> ₹{{ product.price_per_unit }} per {{ product.unit }}</p>
+            <p><strong>Supplier:</strong> {{ product.supplier.name }}</p>
+            <p><strong>Contact:</strong> {{ product.supplier.phone }}</p>
+
+            {% if user_type == 'vendor' %}
+              <form action="/order" method="POST">
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <input type="number" name="quantity" placeholder="Quantity" min="1" required>
+                <button type="submit" class="btn">Order Now</button>
+              </form>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No products available at the moment.</p>
+    {% endif %}
+  </main>
+
+  <footer style="text-align:center; margin-top:30px;">
+    <a href="/dashboard" class="btn">Back to Dashboard</a>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

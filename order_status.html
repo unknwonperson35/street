@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Orders | StreetBasket</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Your Order History</h1>
+  </header>
+
+  <main style="padding: 20px;">
+    {% if orders %}
+      <table>
+        <tr>
+          <th>Product</th>
+          <th>Supplier</th>
+          <th>Quantity</th>
+          <th>Total Price (₹)</th>
+          <th>Status</th>
+          <th>Order Date</th>
+        </tr>
+        {% for order in orders %}
+          <tr>
+            <td>{{ order.product.name }}</td>
+            <td>{{ order.product.supplier.name }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.total_price }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.order_date.strftime('%Y-%m-%d') }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>You have not placed any orders yet.</p>
+    {% endif %}
+  </main>
+
+  <footer style="text-align:center; margin-top:30px;">
+    <a href="/dashboard" class="btn">Back to Dashboard</a>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

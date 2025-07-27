@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Product</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-green-700 text-center">Edit Product</h2>
+
+    <form action="{{ url_for('edit_product', product_id=product.id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+      <input
+        type="text"
+        name="product_name"
+        value="{{ product.name }}"
+        placeholder="Product Name"
+        class="w-full p-3 border rounded"
+        required
+      />
+
+      <input
+        type="number"
+        name="price"
+        value="{{ product.price }}"
+        placeholder="Price (₹ per kg)"
+        class="w-full p-3 border rounded"
+        min="0"
+        step="0.01"
+        required
+      />
+
+      <input
+        type="number"
+        name="stock"
+        value="{{ product.stock }}"
+        placeholder="Stock Quantity (kg)"
+        class="w-full p-3 border rounded"
+        min="0"
+        step="1"
+        required
+      />
+
+      <label class="block text-gray-700">Current Image:</label>
+      {% if product.image_filename %}
+        <img src="{{ url_for('static', filename='uploads/' + product.image_filename) }}" alt="{{ product.name }}" class="mb-4 max-h-32 object-contain">
+      {% else %}
+        <p class="mb-4 text-gray-500">No image uploaded.</p>
+      {% endif %}
+
+      <input
+        type="file"
+        name="image"
+        accept="image/*"
+        class="w-full"
+      />
+
+      <button
+        type="submit"
+        class="w-full bg-yellow-400 text-white p-3 rounded hover:bg-yellow-500"
+      >
+        Update Product
+      </button>
+    </form>
+  </div>
+
+</body>
+</html>
